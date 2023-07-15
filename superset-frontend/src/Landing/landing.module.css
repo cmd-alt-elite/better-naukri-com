@@ -48,7 +48,7 @@ body {
     align-items: center;
     justify-content: center;
     font-family: 'Inter', sans-serif;
-    ;
+    font-size: 6vw;
 }
 
 .hireBtn:hover {
@@ -63,6 +63,7 @@ body {
     align-items: center;
     justify-content: center;
     font-family: 'Inter', sans-serif;
+    font-size: 6vw;
 }
 
 .jobBtn:hover {
