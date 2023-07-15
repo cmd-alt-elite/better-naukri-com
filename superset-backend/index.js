@@ -1,9 +1,7 @@
 import express from 'express';
-import helmet from 'helmet';
 import usersRoutes from './routes/users.js'
 
 const app = express();
-app.use(helmet());
 
 const PORT = process.env.PORT || 5000;
 
