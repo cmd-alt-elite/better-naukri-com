@@ -1,63 +1,68 @@
 import { v4 as uuidv4 } from 'uuid';
+import { userCollection } from '../config.js';
+import { deleteDoc, doc, getDoc, getDocs, setDoc } from 'firebase/firestore/lite';
 
-let users = [
-    {
-        firstName: "Sarthak",
-        lastName: "Aggarwal",
-        age: 19,
-        id: '1',
-    },
-    {
-        firstName: "Kartike",
-        lastName: "Chopra",
-        age: 19,
-        id: '2',
-    },
-    {
-        firstName: "Nishant",
-        lastName: "Luthra",
-        age: 19,
-        id: '3',
-    },
-];
+export const getUsers = async (req, res) => {
+    
+    let users = [];
 
-export const getUsers = (req, res) => {
-    // console.log(users);
-    res.send(users);
+    await getDocs(userCollection).then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            users.push(doc.data());
+        });
+        res.status(200).json({users: users});
+    }).catch((error) => {
+        res.status(400).json({error: `Error in getting users: ${error}`});
+    });
 }
 
-export const createUser = (req, res) => {
+export const createUser = async (req, res) => {
     const user = req.body;
-    const userWithId = {...user, id: uuidv4()};
-    
-    console.log(userWithId);
-    users.push(userWithId);
-    
-    res.send(`User ${user.firstName} ${user.lastName} added to database.`);
+    const userId = uuidv4();
+
+    await setDoc(doc(userCollection, userId), user).then(() => 
+        res.status(200).json({message: `User with name ${user.firstName + ' ' + user.lastName} and ID ${userId} created.`})
+    ).catch((error) => {
+        res.status(400).json({error: `Error in creating user: ${error}`});
+    });
 }
 
-export const deleteUser = (req, res) => {
+export const deleteUser = async (req, res) => {
     const { id } = req.params;
-    users = users.filter((user) => user.id !== id);
-    res.send(`User with ID ${id} deleted.`);
+    await deleteDoc(doc(userCollection, id)).then(() => 
+        res.status(200).json({message: `User with ID ${id} deleted.`})
+    ).catch((error) => {
+        res.status(400).json({error: `Error in deleting user: ${error}`});
+    });
 }
 
-export const getUserDetails = (req, res) => {
+export const getUserDetails = async (req, res) => {
     const { id } = req.params;
-    const foundUser = users.find((user) => user.id === id);
-    if (foundUser) res.send(foundUser);
-    else res.send('Error: User not found.');
+
+    await getDoc(doc(userCollection, id)).then((docSnap) => {
+        if (docSnap.exists()) {
+            res.status(200).json(docSnap.data());
+        } else {
+            res.status(400).json({error: `Error in getting user: User not found.`});
+        }
+    }).catch((error) => {
+        res.status(400).json({error: `Error in getting user: ${error}`});
+    });
 }
 
-export const updateUser = (req, res) => {
+export const updateUser = async (req, res) => {
     const { id } = req.params;
     const { firstName, lastName, age } = req.body;
-    const foundUser = users.find((user) => user.id === id);
-    if (foundUser) {
-        if (firstName) foundUser.firstName = firstName;
-        if (lastName) foundUser.lastName = lastName;
-        if (age) foundUser.age = age;
-        res.send(`User with ID ${foundUser.id} updated.`);
-    }
-    else res.send('Error: User not found.');
+    
+    let updateDetails = {};
+
+    if (firstName) updateDetails.firstName = firstName;
+    if (lastName) updateDetails.lastName = lastName;
+    if (age) updateDetails.age = age;
+
+    await setDoc(doc(userCollection, id), updateDetails, {merge: true}).then(() => 
+        res.status(200).json({message: `User with ID ${id} updated.`})
+    ).catch((error) => {
+        res.status(400).json({error: `Error in updating user: ${error}`});
+    });
 }
