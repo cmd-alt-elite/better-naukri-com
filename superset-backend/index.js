@@ -1,5 +1,4 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import usersRoutes from './routes/users.js'
 
@@ -8,7 +7,7 @@ app.use(helmet());
 
 const PORT = process.env.PORT || 5000;
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.use('/users', usersRoutes);
 
