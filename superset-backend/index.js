@@ -1,12 +1,14 @@
 import express from 'express';
-import usersRoutes from './routes/users.js'
-import jobsRoutes from './routes/jobs.js'
+import usersRoutes from './routes/users.js';
+import jobsRoutes from './routes/jobs.js';
+import cors from 'cors';
 
 const app = express();
 
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
+app.use(cors());
 
 app.use('/users', usersRoutes);
 app.use('/jobs', jobsRoutes);
