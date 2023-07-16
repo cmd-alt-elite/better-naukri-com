@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@700&display=swap');
+
+.loginWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    align-items: center;
+    justify-content: center;
+    padding-top: 8vw;
+}
+
+.heading {
+    align-items: center;
+    width: 40%;
+    background-color: #023047;
+    font-size: 3vw;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 20px;
+    font-family: 'Manrope', sans-serif;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+.subHeading,
+.fb,
+.google,
+.apple {
+    align-items: center;
+    width: 25%;
+    background-color: #FB8500;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.subHeading {
+    margin-bottom: 4vw;
+    color: black;
+    font-size: 2vw;
+}
+
+.fb,
+.google,
+.apple {
+    width: 20%;
+    border-radius: 10px;
+}
+
+.fb {
+    background-color: #1877F2;
+    color: white;
+}
+
+.google {
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    color: rgba(0, 0, 0, 0.542);
+}
+
+.apple {
+    background-color: black;
+    color: white;
+}
