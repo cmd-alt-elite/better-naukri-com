@@ -22,13 +22,14 @@ body {
 
 .heading {
     align-items: center;
-    width: 30%;
-    background-color: #FFB703;
+    width: 40%;
+    background-color: #023047;
     font-size: 3vw;
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 20px;
     font-family: 'Manrope', sans-serif;
+    color: #ffffff;
 }
 
 .decisionWrapper {
@@ -45,6 +46,7 @@ body {
     height: 100%;
     background-color: #FB8500;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     font-family: 'Inter', sans-serif;
@@ -60,6 +62,7 @@ body {
     height: 100%;
     background-color: #219EBC;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     font-family: 'Inter', sans-serif;
