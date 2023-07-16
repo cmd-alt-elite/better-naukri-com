@@ -4,6 +4,8 @@ import facebook from '../assets/facebook.png';
 import apple from '../assets/apple.png';
 import google from '../assets/google.png';
 
+import { useEffect } from 'react';
+
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
@@ -40,6 +42,13 @@ const JobLogin = () => {
         console.log("error: ", error);
       });
   }
+
+    useEffect(() => {
+        const loggedInUser = sessionStorage.getItem("UID");
+        if (loggedInUser != null) {
+            navigate('/hunting')
+        }
+    }, []);
 
     return (
         <div className={styles.loginWrapper}>

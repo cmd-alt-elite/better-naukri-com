@@ -5,3 +5,27 @@
 .bgBodyTertiary {
     background-color: #023047;
 }
+
+.brand {
+    color: white;
+}
+
+.brand:hover {
+    color: white;
+}
+
+.button {
+    background-color: #FB8500;
+    color: white;
+    border: 2px solid #FB8500;
+    transition-duration: 0.2s;
+    padding: 4px 8px 4px 8px;
+    border-radius: 5px;
+}
+
+
+.button:hover {
+    background-color: transparent;
+    border: 2px solid #FB8500;
+    color: #FB8500;
+}

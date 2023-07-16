@@ -4,10 +4,13 @@ import rocket from '../assets/rocket.png';
 import {Navbar, Nav, Container, Form, FormControl, Button} from 'react-bootstrap';
 
 const MyNavbar = () => {
+  const handleLogout = () => {
+    sessionStorage.clear();
+  }
   return (
     <Navbar expand="lg" className={styles.bgBodyTertiary}>
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="/" className={styles.brand}>
             <img
               alt=""
               src={rocket}
@@ -30,7 +33,11 @@ const MyNavbar = () => {
         </Form>
 
         <Nav>
-            <Nav.Link href="/login">Login</Nav.Link>
+            <Nav.Link href="/" onClick={handleLogout}>
+              <button className={styles.button}>
+                Logout
+              </button>
+            </Nav.Link>
         </Nav>
       </Container>
     </Navbar>
