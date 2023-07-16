@@ -9,7 +9,7 @@ const JobLogin = () => {
         <div className={styles.loginWrapper}>
             <div className={styles.heading}>
                 <img src={bigRocket} alt="" />
-                Better Superset
+                Super Superset
             </div>
             <div className={styles.subHeading}>
                 Find Top Jobs

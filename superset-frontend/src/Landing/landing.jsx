@@ -18,7 +18,7 @@ const Landing = () => {
             <div className={styles.headingContainer}>
                 <div className={styles.heading}>
                     <img src={bigRocket} alt="" />
-                    Better Superset
+                    Super Superset
                 </div>
             </div>
             <div className={styles.decisionWrapper}>
