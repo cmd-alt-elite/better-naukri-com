@@ -49,6 +49,10 @@
     border-radius: 10px;
 }
 
+.google:hover {
+    cursor: pointer;
+}
+
 .fb {
     background-color: #1877F2;
     color: white;
