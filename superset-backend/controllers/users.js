@@ -41,7 +41,7 @@ export const getUserDetails = async (req, res) => {
 
     await getDoc(doc(userCollection, id)).then((docSnap) => {
         if (docSnap.exists()) {
-            res.status(200).json(docSnap.data());
+            res.status(200).json({details: docSnap.data()});
         } else {
             res.status(400).json({error: `Error in getting user: User not found.`});
         }
