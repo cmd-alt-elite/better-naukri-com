@@ -1,3 +1,5 @@
+import styles from './jobHome.module.css';
+
 import MyNavbar from "../Reuse/Navbar.jsx";
 
 import { useEffect, useState } from "react";
@@ -31,17 +33,30 @@ const JobHome = () => {
     return ( 
         <div>
             <MyNavbar></MyNavbar>
-            {allJobs &&
-                allJobs.map(job => {
-                    return (
-                        <div key={job.companyId}>
-                            Role: {job.role}
-                            Compensation: {job.compensation}
-                            Location: {job.location}
-                        </div>
-                    )
-                })
-            }
+            <div className={styles.flexWrapper}>
+                <div className={styles.leftPanel}></div>
+                <div className={styles.centrePanel}>
+                    {allJobs &&
+                        allJobs.map(job => {
+                            return (
+                                <div key={job.companyId} className={styles.jobWrapper}>
+                                    <div className={styles.top}>
+                                        Role: {job.role}
+                                        <div className={styles.button}>
+                                            Apply
+                                        </div>
+                                    </div>
+                                    <div className={styles.bottom}>
+                                        <p>Salary: ₹{job.compensation.toLocaleString("en-IN")}</p>
+                                        <p>Location: {job.location}</p>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+                <div className={styles.rightPanel}></div>
+            </div>
         </div>
     );
     
