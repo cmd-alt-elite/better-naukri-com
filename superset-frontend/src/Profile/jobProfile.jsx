@@ -2,11 +2,12 @@ import axios from "axios";
 import styles from "./jobProfile.module.css";
 import { useEffect, useState } from "react";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import MyNavbar from "../Reuse/Navbar";
 
 const JobProfile = () => {
+    const navigate = useNavigate();
     const {id} = useParams();
     const [displayName, setDisplayName] = useState();
     const [email, setEmail] = useState();
@@ -14,6 +15,9 @@ const JobProfile = () => {
     const [applications, setApplications] = useState();
 
     useEffect(()=>{
+        if(!sessionStorage.getItem("applicationID")){
+            navigate("/");
+        }
         axios.get(
             `https://better-naukri-com.onrender.com/applicants/${id}`
         ).then((res)=>{
