@@ -18,12 +18,12 @@ export const getApplicants = async (req, res) => {
 
 export const createApplicant = async (req, res) => {
     let applicant = req.body;
-    const doesExistQuery = query(applicantsCollection, where("email", "==", applicant.email));
 
+    const doesExistQuery = query(applicantsCollection, where("email", "==", applicant.email));
     let querySnapshot = await getDocs(doesExistQuery);
 
     if (querySnapshot && querySnapshot.docs.length > 0) {
-        res.status(400).json({error: "Error in creating applicant: applicant already exists."});
+        res.status(200).json({message: "Applicant already exists, skipping registration."});
     } else {
         const applicantId = uuidv4();
         applicant.applicantId = applicantId;

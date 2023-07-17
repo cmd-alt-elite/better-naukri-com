@@ -18,13 +18,12 @@ export const getRecruiters = async (req, res) => {
 
 export const createRecruiter = async (req, res) => {
     let recruiter = req.body;
-
+    
     const doesExistQuery = query(recruitersCollection, where("email", "==", recruiter.email));
-
     let querySnapshot = await getDocs(doesExistQuery);
 
     if (querySnapshot && querySnapshot.docs.length > 0) {
-        res.status(400).json({error: "Error in creating recruiter: recruiter already exists."});
+        res.status(200).json({message: "Recruiter already exists, skipping registration."});
     } else {
         const recruiterId = uuidv4();
         recruiter.recruiterId = recruiterId;
