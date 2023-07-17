@@ -35,7 +35,7 @@ const HireLogin = () => {
         console.log("credential: ", credential);
         console.log("error: ", error);
       });
-  }
+    }
 
     return (
         <div className={styles.loginWrapper}>
