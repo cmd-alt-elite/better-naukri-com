@@ -1,12 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
-import { applicantCollection } from '../config.js';
-import { deleteDoc, doc, getDoc, getDocs, setDoc } from 'firebase/firestore/lite';
+import { applicantsCollection } from '../config.js';
+import { deleteDoc, doc, getDoc, getDocs, setDoc, where, query } from 'firebase/firestore/lite';
 
 export const getApplicants = async (req, res) => {
     
     let applicants = [];
 
-    await getDocs(applicantCollection).then((querySnapshot) => {
+    await getDocs(applicantsCollection).then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             applicants.push(doc.data());
         });
@@ -18,19 +18,27 @@ export const getApplicants = async (req, res) => {
 
 export const createApplicant = async (req, res) => {
     let applicant = req.body;
-    const applicantId = uuidv4();
-    applicant.applicantId = applicantId;
+    const doesExistQuery = query(applicantsCollection, where("email", "==", applicant.email));
 
-    await setDoc(doc(applicantCollection, applicantId), applicant).then(() => 
-        res.status(200).json({message: `Applicant with name ${applicant.firstName + ' ' + applicant.lastName} and ID ${applicantId} created.`})
-    ).catch((error) => {
-        res.status(400).json({error: `Error in creating applicant: ${error}`});
-    });
+    let querySnapshot = await getDocs(doesExistQuery);
+
+    if (querySnapshot && querySnapshot.docs.length > 0) {
+        res.status(400).json({error: "Error in creating applicant: applicant already exists."});
+    } else {
+        const applicantId = uuidv4();
+        applicant.applicantId = applicantId;
+
+        await setDoc(doc(applicantsCollection, applicantId), applicant).then(() => 
+            res.status(200).json({message: `Applicant with name ${applicant.name} and ID ${applicantId} created.`})
+        ).catch((error) => {
+            res.status(400).json({error: `Error in creating applicant: ${error}`});
+        });
+    }
 }
 
 export const deleteApplicant = async (req, res) => {
     const { id } = req.params;
-    await deleteDoc(doc(applicantCollection, id)).then(() => 
+    await deleteDoc(doc(applicantsCollection, id)).then(() => 
         res.status(200).json({message: `Applicant with ID ${id} deleted.`})
     ).catch((error) => {
         res.status(400).json({error: `Error in deleting applicant: ${error}`});
@@ -40,7 +48,7 @@ export const deleteApplicant = async (req, res) => {
 export const getApplicantDetails = async (req, res) => {
     const { id } = req.params;
 
-    await getDoc(doc(applicantCollection, id)).then((docSnap) => {
+    await getDoc(doc(applicantsCollection, id)).then((docSnap) => {
         if (docSnap.exists()) {
             res.status(200).json({details: docSnap.data()});
         } else {
@@ -53,15 +61,13 @@ export const getApplicantDetails = async (req, res) => {
 
 export const updateApplicant = async (req, res) => {
     const { id } = req.params;
-    const { firstName, lastName, age } = req.body;
+    const { name } = req.body;
     
     let updateDetails = {};
 
-    if (firstName) updateDetails.firstName = firstName;
-    if (lastName) updateDetails.lastName = lastName;
-    if (age) updateDetails.age = age;
+    if (name) updateDetails.name = name;
 
-    await setDoc(doc(applicantCollection, id), updateDetails, {merge: true}).then(() => 
+    await setDoc(doc(applicantsCollection, id), updateDetails, {merge: true}).then(() => 
         res.status(200).json({message: `Applicant with ID ${id} updated.`})
     ).catch((error) => {
         res.status(400).json({error: `Error in updating applicant: ${error}`});
