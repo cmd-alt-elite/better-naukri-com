@@ -44,7 +44,7 @@ const JobProfile = () => {
                 </div>
                 
                 <div className={styles.applicationWrapper}>
-                    <p>Applications:</p>
+                    <p>My Applications</p>
                     {
                         applications &&
                             applications.map((application)=>{
