@@ -3,8 +3,14 @@ import rocket from '../assets/rocket.png';
 
 import {Navbar, Nav, Container, Form, FormControl, Button} from 'react-bootstrap';
 
+import { useNavigate } from 'react-router-dom';
+
 const MyNavbar = () => {
+  const navigate = useNavigate();
   const displayPic = sessionStorage.getItem("displayPic");
+  const handleProfileClick = () => {
+    navigate(`/hunting/${sessionStorage.getItem("applicantID")}`);
+  }
   const handleLogout = () => {
     sessionStorage.clear();
   }
@@ -34,7 +40,7 @@ const MyNavbar = () => {
         </Form>
 
         <Nav>
-            <Nav.Link href={`/hunting/${sessionStorage.getItem("applicantID")}`}>
+            <Nav.Link onClick={handleProfileClick}>
                 <img src={displayPic} alt="" className={styles.profilePic}/>
             </Nav.Link>
             <Nav.Link href="/" onClick={handleLogout}>
