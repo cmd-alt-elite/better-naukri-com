@@ -19,7 +19,7 @@ const MyNavbar = () => {
               height="30"
               className="d-inline-block align-top"
             />{' '}
-            BETTER SUPERSET
+            SUPER SUPERSET
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         
