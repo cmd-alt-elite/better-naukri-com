@@ -8,6 +8,7 @@ const JobProfile = () => {
     const [displayName, setDisplayName] = useState();
     const [email, setEmail] = useState();
     const [uid, setUid] = useState();
+    const [applications, setApplications] = useState();
 
     useEffect(()=>{
         axios.get(
@@ -17,6 +18,12 @@ const JobProfile = () => {
             setEmail(res.data.details.email);
             setUid(res.data.details.uid);
         })
+
+        axios.get(
+            `https://better-naukri-com.onrender.com/applications/applicant/${id}`
+        ).then((res)=>{
+            setApplications(res.data.applications)
+        })
     }, [])
 
     return ( 
@@ -24,6 +31,18 @@ const JobProfile = () => {
             Name: {displayName}
             <br />
             Email: {email}
+            <br />
+            Applications:
+            {
+                applications &&
+                    applications.map((application)=>{
+                        return(
+                            <div>
+                                {application.jobId}
+                            </div>
+                        )
+                })
+            }
         </div>
     );
 }
