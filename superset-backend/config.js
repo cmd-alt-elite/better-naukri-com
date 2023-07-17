@@ -17,3 +17,4 @@ export const database = getFirestore();
 export const applicantsCollection = collection(database, "Applicants");
 export const jobsCollection = collection(database, "Jobs");
 export const recruitersCollection = collection(database, "Recruiters");
+export const applicationsCollection = collection(database, "Applications");

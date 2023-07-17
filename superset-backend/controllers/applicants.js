@@ -61,15 +61,24 @@ export const getApplicantDetails = async (req, res) => {
 
 export const updateApplicant = async (req, res) => {
     const { id } = req.params;
-    const { name } = req.body;
-    
-    let updateDetails = {};
 
-    if (name) updateDetails.name = name;
+    const doesExistQuery = query(applicantsCollection, where("applicantId", "==", id));
 
-    await setDoc(doc(applicantsCollection, id), updateDetails, {merge: true}).then(() => 
-        res.status(200).json({message: `Applicant with ID ${id} updated.`})
-    ).catch((error) => {
-        res.status(400).json({error: `Error in updating applicant: ${error}`});
-    });
+    const querySnapshot = await getDocs(doesExistQuery);
+
+    if (querySnapshot && querySnapshot.docs.length > 0) {
+        const { name } = req.body;
+        
+        let updateDetails = {};
+
+        if (name) updateDetails.name = name;
+
+        await setDoc(doc(applicantsCollection, id), updateDetails, {merge: true}).then(() => 
+            res.status(200).json({message: `Applicant with ID ${id} updated.`})
+        ).catch((error) => {
+            res.status(400).json({error: `Error in updating applicant: ${error}`});
+        });
+    } else {
+        res.status(400).json({error: "Error: Applicant does not exist."});
+    }
 }

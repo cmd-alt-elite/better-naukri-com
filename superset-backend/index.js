@@ -1,6 +1,7 @@
 import express from 'express';
 import applicantsRoutes from './routes/applicants.js';
 import recruitersRoutes from './routes/recruiters.js';
+import applicationsRoutes from './routes/applications.js';
 import jobsRoutes from './routes/jobs.js';
 import cors from 'cors';
 
@@ -14,6 +15,7 @@ app.use(cors());
 app.use('/applicants', applicantsRoutes);
 app.use('/jobs', jobsRoutes);
 app.use('/recruiters', recruitersRoutes);
+app.use('/applications', applicationsRoutes);
 
 app.get('/', (req, res) => {
     console.log("TEST");

@@ -61,15 +61,24 @@ export const getRecruiterDetails = async (req, res) => {
 
 export const updateRecruiter = async (req, res) => {
     const { id } = req.params;
-    const { name } = req.body;
-    
-    let updateDetails = {};
 
-    if (name) updateDetails.name = name;
+    const doesExistQuery = query(recruitersCollection, where("recruiterId", "==", id));
 
-    await setDoc(doc(recruitersCollection, id), updateDetails, {merge: true}).then(() => 
-        res.status(200).json({message: `Recruiter with ID ${id} updated.`})
-    ).catch((error) => {
-        res.status(400).json({error: `Error in updating recruiter: ${error}`});
-    });
+    const querySnapshot = await getDocs(doesExistQuery);
+
+    if (querySnapshot && querySnapshot.docs.length > 0) {
+        const { name } = req.body;
+        
+        let updateDetails = {};
+
+        if (name) updateDetails.name = name;
+
+        await setDoc(doc(recruitersCollection, id), updateDetails, {merge: true}).then(() => 
+            res.status(200).json({message: `Recruiter with ID ${id} updated.`})
+        ).catch((error) => {
+            res.status(400).json({error: `Error in updating recruiter: ${error}`});
+        });
+    } else {
+        res.status(400).json({error: "Error: Recruiter does not exist."});
+    }
 }

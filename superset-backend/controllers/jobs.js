@@ -73,21 +73,28 @@ export const getJobDetails = async (req, res) => {
 
 export const updateJob = async (req, res) => {
     const { id } = req.params;
-    const { role, companyId, compensation, location } = req.body;
-    
-    let updateDetails = {};
 
-    if (role) {
-        updateDetails.role = role;
-        updateDetails.searchKey = role.toLowerCase();
+    const doesExistQuery = query(jobsCollection, where("jobId", "==", id));
+    const querySnapshot = await getDocs(doesExistQuery);
+
+    if (querySnapshot && querySnapshot.docs.length > 0) {
+        const { role, compensation, location } = req.body;
+
+        let updateDetails = {};
+
+        if (role) {
+            updateDetails.role = role;
+            updateDetails.searchKey = role.toLowerCase();
+        }
+        if (compensation) updateDetails.compensation = compensation;
+        if (location) updateDetails.location = location;
+
+        await setDoc(doc(jobsCollection, id), updateDetails, {merge: true}).then(() => 
+            res.status(200).json({message: `Job with ID ${id} updated.`})
+        ).catch((error) => {
+            res.status(400).json({error: `Error in updating job: ${error}`});
+        });
+    } else {
+        res.status(400).json({error: "Error: Job does not exist."});
     }
-    if (companyId) updateDetails.companyId = companyId;
-    if (compensation) updateDetails.compensation = compensation;
-    if (location) updateDetails.location = location;
-
-    await setDoc(doc(jobsCollection, id), updateDetails, {merge: true}).then(() => 
-        res.status(200).json({message: `Job with ID ${id} updated.`})
-    ).catch((error) => {
-        res.status(400).json({error: `Error in updating job: ${error}`});
-    });
 }
