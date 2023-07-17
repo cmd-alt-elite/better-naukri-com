@@ -58,6 +58,7 @@ export const createApplication = async (req, res) => {
         const applicationId = uuidv4();
         application.applicationId = applicationId;
         application.status = "Applied";
+        application.appliedAt = new Date().toISOString();
 
         await setDoc(doc(applicationsCollection, applicationId), application).then(() => 
             res.status(200).json({message: `Application with ID ${applicationId} created.`, applicationId: applicationId})
@@ -95,6 +96,7 @@ export const updateApplication = async (req, res) => {
     const { status } = req.body;
     
     let updateDetails = {};
+    updateDetails.updatedAt = new Date().toISOString();
 
     if (status) updateDetails.status = status;
 

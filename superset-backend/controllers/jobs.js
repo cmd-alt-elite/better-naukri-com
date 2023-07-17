@@ -40,6 +40,7 @@ export const createJob = async (req, res) => {
     job.searchKey = searchKey;
     const jobId = uuidv4();
     job.jobId = jobId;
+    job.createdAt = new Date().toISOString();
 
     await setDoc(doc(jobsCollection, jobId), job).then(() => 
         res.status(200).json({message: `Job with role ${job.role} and ID ${jobId} created.`})
@@ -81,6 +82,7 @@ export const updateJob = async (req, res) => {
         const { role, compensation, location } = req.body;
 
         let updateDetails = {};
+        updateDetails.updatedAt = new Date().toISOString();
 
         if (role) {
             updateDetails.role = role;
