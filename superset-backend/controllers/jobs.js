@@ -39,6 +39,7 @@ export const createJob = async (req, res) => {
     const searchKey = job.role.toLowerCase();
     job.searchKey = searchKey;
     const jobId = uuidv4();
+    job.jobId = jobId;
 
     await setDoc(doc(jobsCollection, jobId), job).then(() => 
         res.status(200).json({message: `Job with role ${job.role} and ID ${jobId} created.`})
