@@ -1,7 +1,10 @@
 import axios from "axios";
+import styles from "./jobProfile.module.css";
 import { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
+
+import MyNavbar from "../Reuse/Navbar";
 
 const JobProfile = () => {
     const {id} = useParams();
@@ -27,22 +30,33 @@ const JobProfile = () => {
     }, [])
 
     return ( 
-        <div>
-            Name: {displayName}
-            <br />
-            Email: {email}
-            <br />
-            Applications:
-            {
-                applications &&
-                    applications.map((application)=>{
-                        return(
-                            <div>
-                                {application.jobId}
-                            </div>
-                        )
-                })
-            }
+        <div className={styles.profileWrapper}>
+            <MyNavbar></MyNavbar>
+            <div className={styles.flexProfile}>
+                <div className={styles.leftPanel}>
+                    <div className={styles.profileInfo}>
+                        <img src={sessionStorage.getItem("displayPic")} alt="" />
+                        <br />
+                        <h3>{displayName}</h3>
+                        <br />
+                        <p>{email}</p>
+                    </div>
+                </div>
+                
+                <div className={styles.applicationWrapper}>
+                    <p>Applications:</p>
+                    {
+                        applications &&
+                            applications.map((application)=>{
+                                return(
+                                    <div>
+                                        {application.jobId}
+                                    </div>
+                                )
+                        })
+                    }
+                </div>
+            </div>
         </div>
     );
 }
