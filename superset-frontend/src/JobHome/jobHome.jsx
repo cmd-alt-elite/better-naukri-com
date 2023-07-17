@@ -3,20 +3,32 @@ import styles from './jobHome.module.css';
 import MyNavbar from "../Reuse/Navbar.jsx";
 
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import axios, { all } from 'axios';
+import ReactPaginate from 'react-paginate';
 
 const JobHome = () => {
     const navigate = useNavigate();
 
     const [allJobs, setAllJobs] = useState(null);
+    // PAGINATION
+    const [jobOffset, setJobOffset] = useState(0);
+    const jobsPerPage = 10;
+    const endOffset = jobOffset + jobsPerPage;
+    const [currentJobs, setCurrentJobs] = useState([]);
+    const [pageCount, setPageCount] = useState(0);
+    const [num, setNum] = useState(0);
 
     useEffect(()=>{
         axios.get('https://better-naukri-com.onrender.com/jobs',{"Content-Type": "application/json"})
         .then(function (response) {
             setAllJobs(response.data.jobs);
-            console.log(response.data.jobs)
+            console.log(`Loading items from ${jobOffset} to ${endOffset}`);
+            
+            setCurrentJobs(response.data.jobs.slice(jobOffset, endOffset));
+            setPageCount(Math.ceil(response.data.jobs.length / jobsPerPage));
+            setNum(response.data.jobs.length);
         })
         .catch(function (error) {
             console.log(error);
@@ -30,14 +42,25 @@ const JobHome = () => {
         }
     }, []);
 
+
+    
+    // Invoke when user click to request another page.
+    const handlePageClick = (event) => {
+      const newOffset = (event.selected * jobsPerPage) % allJobs.length;
+      console.log(
+        `User requested page number ${event.selected}, which is offset ${newOffset}`
+      );
+      setJobOffset(newOffset);
+    };
+
     return ( 
         <div>
             <MyNavbar></MyNavbar>
             <div className={styles.flexWrapper}>
                 <div className={styles.leftPanel}></div>
                 <div className={styles.centrePanel}>
-                    {allJobs &&
-                        allJobs.map(job => {
+                    {allJobs && currentJobs &&
+                        currentJobs.map(job => {
                             return (
                                 <div key={job.companyId} className={styles.jobWrapper}>
                                     <div className={styles.top}>
@@ -54,6 +77,26 @@ const JobHome = () => {
                             )
                         })
                     }
+                    <ReactPaginate
+                        className={styles.paginate}
+                        breakLabel="..." 
+                        nextLabel="next >"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={5}
+                        pageCount={pageCount}
+                        previousLabel="< previous"
+                        renderOnZeroPageCount={null}
+                        containerClassName={"pagination justify-content-center"}
+                        pageClassName={"page-item"}
+                        pageLinkClassName={"page-link"}
+                        previousClassName={"page-item"}
+                        previousLinkClassName={"page-link"}
+                        nextClassName={"page-item"}
+                        nextLinkClassName={"page-link"}
+                        breakClassName={"page-item"}
+                        breakLinkClassName={"page-link"}
+                        activeClassName={"active"}
+                    />
                 </div>
                 <div className={styles.rightPanel}></div>
             </div>
@@ -61,5 +104,5 @@ const JobHome = () => {
     );
     
 }
- 
+
 export default JobHome;

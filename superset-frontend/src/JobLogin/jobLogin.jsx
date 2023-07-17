@@ -25,17 +25,13 @@ const JobLogin = () => {
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
-        const user = result.user;
 
         sessionStorage.setItem("UID", result.user.uid);
         sessionStorage.setItem("displayName", result.user.displayName);
         sessionStorage.setItem("email", result.user.email);
+        sessionStorage.setItem("displayPic", result.user.photoURL);
 
         navigate('/hunting');
-
-        console.log("credential: ", credential);
-        console.log("token: ", token);
-        console.log("user: ", user);
       }).catch((error) => {
         const credential = GoogleAuthProvider.credentialFromError(error);
         console.log("credential: ", credential);
