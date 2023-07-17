@@ -34,7 +34,7 @@ const MyNavbar = () => {
         </Form>
 
         <Nav>
-            <Nav.Link href="/profile">
+            <Nav.Link href={`/hunting/${sessionStorage.getItem("applicantID")}`}>
                 <img src={displayPic} alt="" className={styles.profilePic}/>
             </Nav.Link>
             <Nav.Link href="/" onClick={handleLogout}>

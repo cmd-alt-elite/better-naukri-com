@@ -4,7 +4,7 @@ import facebook from '../assets/facebook.png';
 import apple from '../assets/apple.png';
 import google from '../assets/google.png';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
@@ -12,13 +12,15 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import firebaseConfig from "../config";
 
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const JobLogin = () => {
     const navigate = useNavigate();
+    
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    const provider = new GoogleAuthProvider();
+    const provider = new GoogleAuthProvider();  
 
     const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
@@ -31,13 +33,24 @@ const JobLogin = () => {
         sessionStorage.setItem("email", result.user.email);
         sessionStorage.setItem("displayPic", result.user.photoURL);
 
+        axios.post(
+            'https://better-naukri-com.onrender.com/applicants',
+            {
+                "name": result.user.displayName,
+                "uid": result.user.uid,
+                "email": result.user.email
+            }
+        ).then((res)=>{
+            sessionStorage.setItem("applicantID", res.data.applicantId);
+        })
+
         navigate('/hunting');
       }).catch((error) => {
         const credential = GoogleAuthProvider.credentialFromError(error);
         console.log("credential: ", credential);
         console.log("error: ", error);
       });
-  }
+    }
 
     useEffect(() => {
         const loggedInUser = sessionStorage.getItem("UID");

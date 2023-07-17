@@ -8,19 +8,18 @@ import JobLogin from './JobLogin/jobLogin';
 import HireLogin from './HireLogin/hireLogin';
 import JobHome from './JobHome/jobHome';
 import HireHome from './HireHome/hireHome';
+import JobProfile from './Profile/jobProfile';
 
 function App() {
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Landing />}/>
-          {/* <Route path="searching" element={<Login />} /> */}
-        <Route  path="/hunting" element={<JobHome />} />
-        <Route  path="/hiring" element={<HireHome />} />
-        <Route  path="/hunting-login" element={<JobLogin/>} />
-        <Route  path="/hiring-login" element={<HireLogin/>} />
-        {/* <Route  path="/hunting-login" element={<JobHome />} /> */}
-
+        <Route path="/hunting" element={<JobHome/>} />
+        <Route path="/hiring" element={<HireHome />} />
+        <Route path="/hunting-login" element={<JobLogin/>} />
+        <Route path="/hiring-login" element={<HireLogin/>} />
+        <Route path="/hunting/:id" element={<JobProfile/>} />
       </Routes>
       
     </div>  
