@@ -30,10 +30,6 @@ const HireLogin = () => {
         sessionStorage.setItem("email", result.user.email);
 
         navigate('/hiring');
-
-        console.log("credential: ", credential);
-        console.log("token: ", token);
-        console.log("user: ", user);
       }).catch((error) => {
         const credential = GoogleAuthProvider.credentialFromError(error);
         console.log("credential: ", credential);

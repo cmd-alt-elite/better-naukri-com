@@ -4,6 +4,7 @@ import rocket from '../assets/rocket.png';
 import {Navbar, Nav, Container, Form, FormControl, Button} from 'react-bootstrap';
 
 const MyNavbar = () => {
+  const displayPic = sessionStorage.getItem("displayPic");
   const handleLogout = () => {
     sessionStorage.clear();
   }
@@ -18,7 +19,7 @@ const MyNavbar = () => {
               height="30"
               className="d-inline-block align-top"
             />{' '}
-            BETTER SUPERSET
+            SUPER SUPERSET
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         
@@ -33,6 +34,9 @@ const MyNavbar = () => {
         </Form>
 
         <Nav>
+            <Nav.Link href="/profile">
+                <img src={displayPic} alt="" className={styles.profilePic}/>
+            </Nav.Link>
             <Nav.Link href="/" onClick={handleLogout}>
               <button className={styles.button}>
                 Logout

@@ -29,3 +29,8 @@
     border: 2px solid #FB8500;
     color: #FB8500;
 }
+
+.profilePic {
+    border-radius: 50%;
+    width: 40px;
+}
