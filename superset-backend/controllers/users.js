@@ -17,8 +17,9 @@ export const getUsers = async (req, res) => {
 }
 
 export const createUser = async (req, res) => {
-    const user = req.body;
+    let user = req.body;
     const userId = uuidv4();
+    user.userId = userId;
 
     await setDoc(doc(userCollection, userId), user).then(() => 
         res.status(200).json({message: `User with name ${user.firstName + ' ' + user.lastName} and ID ${userId} created.`})
