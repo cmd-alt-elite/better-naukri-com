@@ -31,6 +31,21 @@ export const getApplicantApplications = async (req, res) => {
     });
 }
 
+export const getJobApplications = async (req, res) => {
+    
+    let applications = [];
+    const { jobId } = req.params; 
+
+    await getDocs(query(applicationsCollection, where("jobId", "==", jobId))).then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            applications.push(doc.data());
+        });
+        res.status(200).json({applications: applications});
+    }).catch((error) => {
+        res.status(400).json({error: `Error in getting applications: ${error}`});
+    });
+}
+
 export const createApplication = async (req, res) => {
     let application = req.body;
 
