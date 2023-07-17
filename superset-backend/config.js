@@ -14,5 +14,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const database = getFirestore();
-export const userCollection = collection(database, "Users");
+export const applicantCollection = collection(database, "Applicants");
 export const jobsCollection = collection(database, "Jobs");
+export const recruiterCollection = collection(database, "Recruiters");
