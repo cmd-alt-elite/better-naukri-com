@@ -23,13 +23,13 @@ export const createApplicant = async (req, res) => {
     let querySnapshot = await getDocs(doesExistQuery);
 
     if (querySnapshot && querySnapshot.docs.length > 0) {
-        res.status(200).json({message: "Applicant already exists, skipping registration."});
+        res.status(200).json({message: "Applicant already exists, skipping registration.", applicantId: querySnapshot.docs[0].data().applicantId});
     } else {
         const applicantId = uuidv4();
         applicant.applicantId = applicantId;
 
         await setDoc(doc(applicantsCollection, applicantId), applicant).then(() => 
-            res.status(200).json({message: `Applicant with name ${applicant.name} and ID ${applicantId} created.`})
+            res.status(200).json({message: `Applicant with name ${applicant.name} and ID ${applicantId} created.`, applicantId: applicantId})
         ).catch((error) => {
             res.status(400).json({error: `Error in creating applicant: ${error}`});
         });

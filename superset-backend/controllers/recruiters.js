@@ -23,13 +23,13 @@ export const createRecruiter = async (req, res) => {
     let querySnapshot = await getDocs(doesExistQuery);
 
     if (querySnapshot && querySnapshot.docs.length > 0) {
-        res.status(200).json({message: "Recruiter already exists, skipping registration."});
+        res.status(200).json({message: "Recruiter already exists, skipping registration.", recruiterId: querySnapshot.docs[0].data().recruiterId});
     } else {
         const recruiterId = uuidv4();
         recruiter.recruiterId = recruiterId;
 
         await setDoc(doc(recruitersCollection, recruiterId), recruiter).then(() => 
-            res.status(200).json({message: `Recruiter with name ${recruiter.name} and ID ${recruiterId} created.`})
+            res.status(200).json({message: `Recruiter with name ${recruiter.name} and ID ${recruiterId} created.`, recruiterId: recruiterId})
         ).catch((error) => {
             res.status(400).json({error: `Error in creating recruiter: ${error}`});
         });
