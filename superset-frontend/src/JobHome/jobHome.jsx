@@ -40,7 +40,7 @@ const JobHome = () => {
     }, [])
     
     useEffect(() => {
-        if(!isApplicant)navigate('/');
+        if(!sessionStorage.getItem("applicantID"))navigate('/');
     }, []);
 
 

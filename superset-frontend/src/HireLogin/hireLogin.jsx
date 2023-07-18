@@ -48,10 +48,10 @@ const HireLogin = () => {
         ).then((res)=>{
             sessionStorage.setItem("recruiterID", res.data.recruiterId);
             dispatch(recruiterLogin(res.data.recruiterId));
+            navigate(`/hiring/${sessionStorage.getItem("recruiterID")}`);
         })
-
-        navigate('/hiring');
-      }).catch((error) => {
+      })
+      .catch((error) => {
         const credential = GoogleAuthProvider.credentialFromError(error);
         console.log("credential: ", credential);
         console.log("error: ", error);

@@ -14,6 +14,12 @@ const HireProfile = () => {
     const [uid, setUid] = useState();
 	const [applications, setApplications] = useState();
 
+    useEffect(() => {
+        if(sessionStorage.getItem("recruiterID") == null){
+            navigate('/');
+        }
+    }, []);
+
     useEffect(()=>{
         axios.get(
             `https://better-naukri-com.onrender.com/recruiters/${id}`
@@ -22,7 +28,7 @@ const HireProfile = () => {
             setEmail(res.data.details.email);
             setUid(res.data.details.uid);
         }).catch((e)=>{
-            navigate("/hiring");
+            navigate("/");
             alert("Incorrect Recruiter ID.");
         })
 
@@ -30,6 +36,7 @@ const HireProfile = () => {
             `https://better-naukri-com.onrender.com/jobs/recruiter/${id}`
         ).then((res)=>{
             setApplications(res.data.jobs);
+            console.log(res.data.jobs);
         })
     }, [])
 
@@ -48,7 +55,7 @@ const HireProfile = () => {
                 </div>
                 
                 <div className={styles.applicationWrapper}>
-                    <p>Jobs Created</p>
+                    <p>My Roles</p>
                     {
                         applications &&
                             applications.map((application)=>{
