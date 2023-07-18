@@ -13,8 +13,13 @@ import firebaseConfig from "../config";
 
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { recruiterLogin } from '../redux/user';
 
-const HireLogin = ({setIsApplicant, isApplicant}) => {
+const HireLogin = () => {
+    const { isApplicant, isRecruiter, applicantID, recruiterID } = useSelector(state => state.user);
+    const dispatch = useDispatch();
+
     const navigate = useNavigate();
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
@@ -32,7 +37,7 @@ const HireLogin = ({setIsApplicant, isApplicant}) => {
         sessionStorage.setItem("displayName", result.user.displayName);
         sessionStorage.setItem("email", result.user.email);
         sessionStorage.setItem("displayPic", result.user.photoURL);
-        setIsApplicant(false);
+
         axios.post(
             'https://better-naukri-com.onrender.com/recruiters',
             {
@@ -42,6 +47,7 @@ const HireLogin = ({setIsApplicant, isApplicant}) => {
             }
         ).then((res)=>{
             sessionStorage.setItem("recruiterID", res.data.recruiterId);
+            dispatch(recruiterLogin(res.data.recruiterId));
         })
 
         navigate('/hiring');
@@ -54,7 +60,7 @@ const HireLogin = ({setIsApplicant, isApplicant}) => {
 
     useEffect(() => {
         const loggedInUser = sessionStorage.getItem("UID");
-        if (loggedInUser != null && !isApplicant) {
+        if (loggedInUser != null && isRecruiter) {
             navigate('/hiring');
         }
     }, []);

@@ -30,7 +30,6 @@ const HireProfile = () => {
             `https://better-naukri-com.onrender.com/jobs/recruiter/${id}`
         ).then((res)=>{
             setApplications(res.data.jobs);
-            console.log(res.data.jobs);
         })
     }, [])
 

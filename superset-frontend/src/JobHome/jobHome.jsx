@@ -8,13 +8,17 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
 
-const JobHome = ({isApplicant}) => {
+import { useSelector } from 'react-redux';
+
+const JobHome = () => {
+    const { isApplicant, isRecruiter, applicantID, recruiterID } = useSelector(state => state.user);
+
     const navigate = useNavigate();
 
     const [allJobs, setAllJobs] = useState(null);
     // PAGINATION
     const [jobOffset, setJobOffset] = useState(0);
-    const jobsPerPage = 10;
+    const jobsPerPage = 7;
     const endOffset = jobOffset + jobsPerPage;
     const [currentJobs, setCurrentJobs] = useState([]);
     const [pageCount, setPageCount] = useState(0);
@@ -36,10 +40,7 @@ const JobHome = ({isApplicant}) => {
     }, [])
     
     useEffect(() => {
-        const loggedInUser = sessionStorage.getItem("UID");
-        if (loggedInUser == null){
-            navigate('/')
-        }
+        if(!isApplicant)navigate('/');
     }, []);
 
 

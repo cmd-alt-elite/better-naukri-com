@@ -1,23 +1,33 @@
 import styles from './navbar.module.css';
 import rocket from '../assets/rocket.png';
 
-import {Navbar, Nav, Container, Form, FormControl, Button} from 'react-bootstrap';
+import { userLogout } from '../redux/user';
 
+import { useSelector, useDispatch } from "react-redux";
+import {Navbar, Nav, Container, Form, FormControl, Button} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
-const MyNavbar = ({isApplicant}) => {
+const MyNavbar = ({}) => {
+  const { isApplicant, isRecruiter, applicantID, recruiterID } = useSelector(state => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const displayPic = sessionStorage.getItem("displayPic");
   const handleProfileClick = () => {
-    if(sessionStorage.getItem("applicantID") != null){
-      navigate(`/hunting/${sessionStorage.getItem("applicantID")}`);
+    console.log(isApplicant);
+    if(isApplicant && !isRecruiter){
+      navigate(`/hunting/${applicantID}`);
     }
-    else if(sessionStorage.getItem("recruiterID") != null){
-      navigate(`/hiring/${sessionStorage.getItem("recruiterID")}`);
+    else if(!isApplicant && isRecruiter){
+      navigate(`/hiring/${recruiterID}`);
+    }
+    else{
+      dispatch(userLogout);
+      navigate("/");
     }
       
   }
   const handleLogout = () => {
+    dispatch(userLogout);
     sessionStorage.clear();
   }
   return (

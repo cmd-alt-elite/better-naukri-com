@@ -18,13 +18,15 @@
 }
 
 .centrePanel {
-    height: 100%;
+    height: auto;
     width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-right: 1px solid rgba(0, 0, 0, 0.238);
     border-left: 1px solid rgba(0, 0, 0, 0.238);
+    overflow-y: scroll;
+    margin-bottom: 80px;
 }
 
 .button {

@@ -13,8 +13,13 @@ import firebaseConfig from "../config";
 
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { applicantLogin } from '../redux/user';
 
-const JobLogin = ({setIsApplicant, isApplicant}) => {
+const JobLogin = () => {
+    const { isApplicant, isRecruiter, applicantID, recruiterID } = useSelector(state => state.user);
+    const dispatch = useDispatch();
+    
     const navigate = useNavigate();
     
     const app = initializeApp(firebaseConfig);
@@ -32,7 +37,7 @@ const JobLogin = ({setIsApplicant, isApplicant}) => {
         sessionStorage.setItem("displayName", result.user.displayName);
         sessionStorage.setItem("email", result.user.email);
         sessionStorage.setItem("displayPic", result.user.photoURL);
-        setIsApplicant(true);
+        
         axios.post(
             'https://better-naukri-com.onrender.com/applicants',
             {
@@ -42,6 +47,7 @@ const JobLogin = ({setIsApplicant, isApplicant}) => {
             }
         ).then((res)=>{
             sessionStorage.setItem("applicantID", res.data.applicantId);
+            dispatch(applicantLogin(res.data.applicantId));
         })
 
         navigate('/hunting');
