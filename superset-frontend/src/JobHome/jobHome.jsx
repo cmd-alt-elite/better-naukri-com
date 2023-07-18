@@ -5,10 +5,10 @@ import MyNavbar from "../Reuse/Navbar.jsx";
 import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-import axios, { all } from 'axios';
+import axios from 'axios';
 import ReactPaginate from 'react-paginate';
 
-const JobHome = () => {
+const JobHome = ({isApplicant}) => {
     const navigate = useNavigate();
 
     const [allJobs, setAllJobs] = useState(null);
@@ -55,7 +55,7 @@ const JobHome = () => {
 
     return ( 
         <div>
-            <MyNavbar></MyNavbar>
+            <MyNavbar isApplicant={isApplicant}/>
             <div className={styles.flexWrapper}>
                 <div className={styles.leftPanel}></div>
                 <div className={styles.centrePanel}>

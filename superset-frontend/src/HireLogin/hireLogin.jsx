@@ -4,14 +4,17 @@ import facebook from '../assets/facebook.png';
 import apple from '../assets/apple.png';
 import google from '../assets/google.png';
 
+import { useEffect } from 'react';
+
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 import firebaseConfig from "../config";
 
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const HireLogin = () => {
+const HireLogin = ({setIsApplicant, isApplicant}) => {
     const navigate = useNavigate();
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
@@ -28,6 +31,18 @@ const HireLogin = () => {
         sessionStorage.setItem("UID", result.user.uid);
         sessionStorage.setItem("displayName", result.user.displayName);
         sessionStorage.setItem("email", result.user.email);
+        sessionStorage.setItem("displayPic", result.user.photoURL);
+        setIsApplicant(false);
+        axios.post(
+            'https://better-naukri-com.onrender.com/recruiters',
+            {
+                "name": result.user.displayName,
+                "uid": result.user.uid,
+                "email": result.user.email
+            }
+        ).then((res)=>{
+            sessionStorage.setItem("recruiterId", res.data.recruiterId);
+        })
 
         navigate('/hiring');
       }).catch((error) => {
@@ -36,6 +51,13 @@ const HireLogin = () => {
         console.log("error: ", error);
       });
     }
+
+    useEffect(() => {
+        const loggedInUser = sessionStorage.getItem("UID");
+        if (loggedInUser != null && !isApplicant) {
+            navigate('/hiring')
+        }
+    }, []);
 
     return (
         <div className={styles.loginWrapper}>

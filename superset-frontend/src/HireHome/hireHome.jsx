@@ -1,6 +1,10 @@
+import MyNavbar from "../Reuse/Navbar";
+
 const HireHome = () => {
     return (
-        <div></div>
+        <div>
+            <MyNavbar/>
+        </div>
     );
 }
  

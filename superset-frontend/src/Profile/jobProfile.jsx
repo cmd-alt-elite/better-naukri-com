@@ -2,11 +2,12 @@ import axios from "axios";
 import styles from "./jobProfile.module.css";
 import { useEffect, useState } from "react";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import MyNavbar from "../Reuse/Navbar";
 
 const JobProfile = () => {
+    const navigate = useNavigate();
     const {id} = useParams();
     const [displayName, setDisplayName] = useState();
     const [email, setEmail] = useState();
@@ -20,12 +21,15 @@ const JobProfile = () => {
             setDisplayName(res.data.details.name);
             setEmail(res.data.details.email);
             setUid(res.data.details.uid);
+        }).catch((e)=>{
+            navigate("/hunting");
+            alert("Incorrect Applicant ID.");
         })
 
         axios.get(
             `https://better-naukri-com.onrender.com/applications/applicant/${id}`
         ).then((res)=>{
-            setApplications(res.data.applications)
+            setApplications(res.data.applications);
         })
     }, [])
 
@@ -44,7 +48,7 @@ const JobProfile = () => {
                 </div>
                 
                 <div className={styles.applicationWrapper}>
-                    <p>Applications:</p>
+                    <p>My Applications</p>
                     {
                         applications &&
                             applications.map((application)=>{

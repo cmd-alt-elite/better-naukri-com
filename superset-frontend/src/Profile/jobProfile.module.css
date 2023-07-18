@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap');
 
 .flexProfile {
     margin-top: 2vw;
@@ -30,4 +31,9 @@
 
 .applicationWrapper {
     width: 65%;
+}
+
+.applicationWrapper p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
 }
