@@ -12,6 +12,7 @@ const HireProfile = () => {
     const [displayName, setDisplayName] = useState();
     const [email, setEmail] = useState();
     const [uid, setUid] = useState();
+	const [applications, setApplications] = useState();
 
     useEffect(()=>{
         axios.get(
@@ -23,6 +24,13 @@ const HireProfile = () => {
         }).catch((e)=>{
             navigate("/hiring");
             alert("Incorrect Recruiter ID.");
+        })
+
+		axios.get(
+            `https://better-naukri-com.onrender.com/jobs/recruiter/${id}`
+        ).then((res)=>{
+            setApplications(res.data.jobs);
+            console.log(res.data.jobs);
         })
     }, [])
 
@@ -40,19 +48,21 @@ const HireProfile = () => {
                     </div>
                 </div>
                 
-                {/* <div className={styles.applicationWrapper}>
-                    <p>My Applications</p>
+                <div className={styles.applicationWrapper}>
+                    <p>Jobs Created</p>
                     {
                         applications &&
                             applications.map((application)=>{
                                 return(
                                     <div>
                                         {application.jobId}
+										<br />
+										{application.location}
                                     </div>
                                 )
                         })
                     }
-                </div> */}
+                </div>
             </div>
         </div>
     );
