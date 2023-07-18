@@ -14,7 +14,7 @@ import firebaseConfig from "../config";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const JobLogin = () => {
+const JobLogin = ({setIsApplicant, isApplicant}) => {
     const navigate = useNavigate();
     
     const app = initializeApp(firebaseConfig);
@@ -32,7 +32,7 @@ const JobLogin = () => {
         sessionStorage.setItem("displayName", result.user.displayName);
         sessionStorage.setItem("email", result.user.email);
         sessionStorage.setItem("displayPic", result.user.photoURL);
-
+        setIsApplicant(true);
         axios.post(
             'https://better-naukri-com.onrender.com/applicants',
             {
@@ -54,7 +54,7 @@ const JobLogin = () => {
 
     useEffect(() => {
         const loggedInUser = sessionStorage.getItem("UID");
-        if (loggedInUser != null) {
+        if (loggedInUser != null && isApplicant) {
             navigate('/hunting')
         }
     }, []);

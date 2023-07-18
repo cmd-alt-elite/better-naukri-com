@@ -15,21 +15,21 @@ const JobProfile = () => {
     const [applications, setApplications] = useState();
 
     useEffect(()=>{
-        if(!sessionStorage.getItem("applicationID")){
-            navigate("/");
-        }
         axios.get(
             `https://better-naukri-com.onrender.com/applicants/${id}`
         ).then((res)=>{
             setDisplayName(res.data.details.name);
             setEmail(res.data.details.email);
             setUid(res.data.details.uid);
+        }).catch((e)=>{
+            navigate("/hunting");
+            alert("Incorrect Applicant ID.");
         })
 
         axios.get(
             `https://better-naukri-com.onrender.com/applications/applicant/${id}`
         ).then((res)=>{
-            setApplications(res.data.applications)
+            setApplications(res.data.applications);
         })
     }, [])
 

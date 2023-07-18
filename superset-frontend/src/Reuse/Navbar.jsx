@@ -5,11 +5,17 @@ import {Navbar, Nav, Container, Form, FormControl, Button} from 'react-bootstrap
 
 import { useNavigate } from 'react-router-dom';
 
-const MyNavbar = () => {
+const MyNavbar = ({isApplicant}) => {
   const navigate = useNavigate();
   const displayPic = sessionStorage.getItem("displayPic");
   const handleProfileClick = () => {
+    
     navigate(`/hunting/${sessionStorage.getItem("applicantID")}`);
+    
+    // (isApplicant === false){
+    //   navigate(`/hiring/123`);
+    // }
+      
   }
   const handleLogout = () => {
     sessionStorage.clear();
