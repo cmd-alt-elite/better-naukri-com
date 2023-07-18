@@ -55,7 +55,7 @@ const JobLogin = ({setIsApplicant, isApplicant}) => {
     useEffect(() => {
         const loggedInUser = sessionStorage.getItem("UID");
         if (loggedInUser != null && isApplicant) {
-            navigate('/hunting')
+            navigate('/hunting');
         }
     }, []);
 

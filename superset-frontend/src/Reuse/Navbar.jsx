@@ -9,12 +9,12 @@ const MyNavbar = ({isApplicant}) => {
   const navigate = useNavigate();
   const displayPic = sessionStorage.getItem("displayPic");
   const handleProfileClick = () => {
-    
-    navigate(`/hunting/${sessionStorage.getItem("applicantID")}`);
-    
-    // (isApplicant === false){
-    //   navigate(`/hiring/123`);
-    // }
+    if(sessionStorage.getItem("applicantID") != null){
+      navigate(`/hunting/${sessionStorage.getItem("applicantID")}`);
+    }
+    else if(sessionStorage.getItem("recruiterID") != null){
+      navigate(`/hiring/${sessionStorage.getItem("recruiterID")}`);
+    }
       
   }
   const handleLogout = () => {

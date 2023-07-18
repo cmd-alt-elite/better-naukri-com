@@ -9,6 +9,7 @@ import HireLogin from './HireLogin/hireLogin';
 import JobHome from './JobHome/jobHome';
 import HireHome from './HireHome/hireHome';
 import JobProfile from './Profile/jobProfile';
+import HireProfile from './Profile/hireProfile';
 import { useState } from 'react';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/hunting-login" element={<JobLogin setIsApplicant={setIsApplicant} isApplicant={isApplicant}/>} />
         <Route path="/hiring-login" element={<HireLogin setIsApplicant={setIsApplicant} isApplicant={isApplicant}/>} />
         <Route path="/hunting/:id" element={<JobProfile/>} />
+        <Route path="/hiring/:id" element={<HireProfile/>} />
       </Routes>
       
     </div>  

@@ -41,7 +41,7 @@ const HireLogin = ({setIsApplicant, isApplicant}) => {
                 "email": result.user.email
             }
         ).then((res)=>{
-            sessionStorage.setItem("recruiterId", res.data.recruiterId);
+            sessionStorage.setItem("recruiterID", res.data.recruiterId);
         })
 
         navigate('/hiring');
@@ -55,7 +55,7 @@ const HireLogin = ({setIsApplicant, isApplicant}) => {
     useEffect(() => {
         const loggedInUser = sessionStorage.getItem("UID");
         if (loggedInUser != null && !isApplicant) {
-            navigate('/hiring')
+            navigate('/hiring');
         }
     }, []);
 
