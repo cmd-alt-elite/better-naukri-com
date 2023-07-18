@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { recruitersCollection } from '../config.js';
-import { deleteDoc, doc, getDoc, getDocs, setDoc } from 'firebase/firestore/lite';
+import { deleteDoc, doc, getDoc, getDocs, setDoc, query, where } from 'firebase/firestore/lite';
 
 export const getRecruiters = async (req, res) => {
     
