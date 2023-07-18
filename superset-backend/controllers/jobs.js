@@ -16,6 +16,23 @@ export const getAllJobs = async (req, res) => {
     });
 }
 
+export const getRecruiterJobs = async (req, res) => {
+    let { recruiterId } = req.params;
+    
+    let jobs = [];
+
+    const searchQuery = query(jobsCollection, where("recruiterId", "==", recruiterId));
+
+    await getDocs(searchQuery).then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            jobs.push(doc.data());
+        });
+        res.status(200).json({jobs: jobs});
+    }).catch((error) => {
+        res.status(400).json({error: `Error in getting jobs: ${error}`});
+    });
+}
+
 export const searchJobs = async (req, res) => {
     
     let { key } = req.params;
