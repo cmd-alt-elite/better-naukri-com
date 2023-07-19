@@ -32,10 +32,14 @@
 }
 
 .applicationWrapper {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
     width: 65%;
 }
 
-.applicationWrapper p {
+.applicationWrapper h3 {
     font-family: 'Inter', sans-serif;
     font-weight: 800;
 }
@@ -53,4 +57,18 @@
 
 .createRole img {
     width: 20%;
+}
+
+.roleWrapper {
+    display: flex;
+    border: 2px solid black;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    width: 60%;
+    justify-content: space-between;
+    padding: 1vw;
+}
+
+.roleWrapper {
+    cursor: pointer;
 }

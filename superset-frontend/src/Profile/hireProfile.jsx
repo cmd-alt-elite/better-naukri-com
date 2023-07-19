@@ -64,15 +64,17 @@ const HireProfile = () => {
                 </div>
                 
                 <div className={styles.applicationWrapper}>
-                    <p>My Roles</p>
+                    <h3>My Roles</h3>
                     {
                         applications &&
                             applications.map((application)=>{
                                 return(
-                                    <div>
-                                        {application.jobId}
-										<br />
-										{application.location}
+                                    <div className={styles.roleWrapper} onClick={()=>{
+                                        navigate(`/job/${application.jobId}`)
+                                    }}>
+                                        <p><b>{application.role}</b></p>
+										<p>{application.location}</p>
+                                        <p>{application.compensation}</p>
                                     </div>
                                 )
                         })
