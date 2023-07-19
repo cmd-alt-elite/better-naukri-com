@@ -2,7 +2,7 @@ import styles from './jobHome.module.css';
 
 import MyNavbar from "../Reuse/Navbar.jsx";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
@@ -38,12 +38,13 @@ const JobHome = () => {
             console.log(error);
         });    
     }, [])
-    
-    useEffect(() => {
-        if(!sessionStorage.getItem("applicantID"))navigate('/');
-    }, []);
 
-
+    // useLayoutEffect(()=>{
+    //     if(sessionStorage.getItem("applicantID") == null){
+    //         console.log(isApplicant);
+    //         navigate('/');
+    //     }
+    // }, [])
     
     // Invoke when user click to request another page.
     const handlePageClick = (event) => {

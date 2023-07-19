@@ -16,7 +16,7 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { recruiterLogin } from '../redux/user';
 
-const HireLogin = () => {
+const HireLogin = ({setRecruiterState}) => {
     const { isApplicant, isRecruiter, applicantID, recruiterID } = useSelector(state => state.user);
     const dispatch = useDispatch();
 
@@ -37,7 +37,7 @@ const HireLogin = () => {
         sessionStorage.setItem("displayName", result.user.displayName);
         sessionStorage.setItem("email", result.user.email);
         sessionStorage.setItem("displayPic", result.user.photoURL);
-
+        setRecruiterState(true);
         axios.post(
             'https://better-naukri-com.onrender.com/recruiters',
             {
@@ -57,13 +57,6 @@ const HireLogin = () => {
         console.log("error: ", error);
       });
     }
-
-    useEffect(() => {
-        const loggedInUser = sessionStorage.getItem("UID");
-        if (loggedInUser != null && isRecruiter) {
-            navigate('/hiring');
-        }
-    }, []);
 
     return (
         <div className={styles.loginWrapper}>

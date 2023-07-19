@@ -11,7 +11,10 @@
 .leftPanel {
     width: 35%;
     display: flex;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .profileInfo {
@@ -21,7 +24,6 @@
 }
 
 .profileInfo img {
-
     border-radius: 50%;
 }
 
@@ -36,4 +38,19 @@
 .applicationWrapper p {
     font-family: 'Inter', sans-serif;
     font-weight: 800;
+}
+
+.createRole {
+    margin-top: 6vw;
+    padding: 2vw;
+    background-color: #8ECAE6;
+    width: 60%;
+}
+
+.createRole:hover {
+    cursor: pointer;
+}
+
+.createRole img {
+    width: 20%;
 }

@@ -1,8 +1,9 @@
 import axios from "axios";
 import styles from "./jobProfile.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
+import plus from "../assets/plus.png";
 
 import MyNavbar from "../Reuse/Navbar";
 
@@ -13,12 +14,6 @@ const HireProfile = () => {
     const [email, setEmail] = useState();
     const [uid, setUid] = useState();
 	const [applications, setApplications] = useState();
-
-    useEffect(() => {
-        if(sessionStorage.getItem("recruiterID") == null){
-            navigate('/');
-        }
-    }, []);
 
     useEffect(()=>{
         axios.get(
@@ -40,6 +35,16 @@ const HireProfile = () => {
         })
     }, [])
 
+    const goToCreate = () => {
+        navigate("/create-role");
+    }
+
+    useLayoutEffect(()=>{
+        if(sessionStorage.getItem("recruiterID") !== id){
+            navigate('/');
+        }
+    }, [])
+
     return ( 
         <div className={styles.profileWrapper}>
             <MyNavbar></MyNavbar>
@@ -51,6 +56,11 @@ const HireProfile = () => {
                         <h3>{displayName}</h3>
                         <br />
                         <p>{email}</p>
+                    </div>
+                    <div className={styles.createRole} onClick={goToCreate}>
+                        <img src={plus} alt="" />
+                        <br />
+                        Create Role
                     </div>
                 </div>
                 

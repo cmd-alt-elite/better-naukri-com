@@ -16,7 +16,7 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { applicantLogin } from '../redux/user';
 
-const JobLogin = () => {
+const JobLogin = ({setApplicantState}) => {
     const { isApplicant, isRecruiter, applicantID, recruiterID } = useSelector(state => state.user);
     const dispatch = useDispatch();
     
@@ -37,6 +37,7 @@ const JobLogin = () => {
         sessionStorage.setItem("displayName", result.user.displayName);
         sessionStorage.setItem("email", result.user.email);
         sessionStorage.setItem("displayPic", result.user.photoURL);
+        setApplicantState(true);
         
         axios.post(
             'https://better-naukri-com.onrender.com/applicants',
@@ -46,24 +47,24 @@ const JobLogin = () => {
                 "email": result.user.email
             }
         ).then((res)=>{
-            sessionStorage.setItem("applicantID", res.data.applicantId);
             dispatch(applicantLogin(res.data.applicantId));
+            sessionStorage.setItem("applicantID", res.data.applicantId);
         })
-
-        navigate('/hunting');
-      }).catch((error) => {
+        }).then((res)=>{}).catch((error) => { 
         const credential = GoogleAuthProvider.credentialFromError(error);
         console.log("credential: ", credential);
         console.log("error: ", error);
-      });
+      }).finally(()=>{
+        navigate('/hunting');
+      })
     }
 
-    useEffect(() => {
-        const loggedInUser = sessionStorage.getItem("UID");
-        if (loggedInUser != null && isApplicant) {
-            navigate('/hunting');
-        }
-    }, []);
+    // useEffect(() => {
+    //     const loggedInUser = sessionStorage.getItem("UID");
+    //     if (loggedInUser != null && isApplicant) {
+    //         navigate('/hunting');
+    //     }
+    // }, []);
 
     return (
         <div className={styles.loginWrapper}>
