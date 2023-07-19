@@ -23,11 +23,11 @@ function App() {
       <Routes>
           <Route path="/" element={<Landing />}/>
           <Route element={<ProtectedJob applicantState={applicantState}/>}>
-              <Route path='/hunting' element={<JobHome/>} />
-              <Route path='/hunting/:id' element={<JobProfile/>} />
+              <Route path='/hunting' element={<JobHome setApplicantState={setApplicantState}/>} />
+              <Route path='/hunting/:id' element={<JobProfile setApplicantState={setApplicantState}/>} />
           </Route>
           <Route element={<ProtectedHire recruiterState={recruiterState}/>}>
-            <Route path="/hiring/:id" element={<HireProfile/>} />
+            <Route path="/hiring/:id" element={<HireProfile setRecruiterState={setRecruiterState}/>} />
           </Route>
           <Route path="/hunting-login" element={<JobLogin setApplicantState={setApplicantState}/>} />
           <Route path="/hiring-login" element={<HireLogin setRecruiterState={setRecruiterState}/>} />

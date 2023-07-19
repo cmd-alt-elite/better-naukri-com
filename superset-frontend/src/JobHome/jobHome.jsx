@@ -10,7 +10,7 @@ import ReactPaginate from 'react-paginate';
 
 import { useSelector } from 'react-redux';
 
-const JobHome = () => {
+const JobHome = ({setApplicantState}) => {
     const { isApplicant, isRecruiter, applicantID, recruiterID } = useSelector(state => state.user);
 
     const navigate = useNavigate();
@@ -39,12 +39,9 @@ const JobHome = () => {
         });    
     }, [])
 
-    // useLayoutEffect(()=>{
-    //     if(sessionStorage.getItem("applicantID") == null){
-    //         console.log(isApplicant);
-    //         navigate('/');
-    //     }
-    // }, [])
+    useLayoutEffect(()=>{
+        setApplicantState(true);
+    }, [])
     
     // Invoke when user click to request another page.
     const handlePageClick = (event) => {

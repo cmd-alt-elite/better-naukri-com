@@ -26,14 +26,25 @@ const MyNavbar = ({}) => {
     }
       
   }
+
   const handleLogout = () => {
     dispatch(userLogout);
     sessionStorage.clear();
   }
+
+  const handleHome = () => {
+    if(isApplicant){
+      navigate('/hunting');
+    }
+    else if(isRecruiter){
+      navigate('/hiring');
+    }
+  }
+
   return (
     <Navbar expand="lg" className={styles.bgBodyTertiary}>
       <Container>
-        <Navbar.Brand href="/" className={styles.brand}>
+        <Navbar.Brand onClick={handleHome} className={styles.brand}>
             <img
               alt=""
               src={rocket}

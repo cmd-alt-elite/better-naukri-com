@@ -4,8 +4,6 @@ import facebook from '../assets/facebook.png';
 import apple from '../assets/apple.png';
 import google from '../assets/google.png';
 
-import { useEffect } from 'react';
-
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
@@ -47,8 +45,9 @@ const HireLogin = ({setRecruiterState}) => {
             }
         ).then((res)=>{
             sessionStorage.setItem("recruiterID", res.data.recruiterId);
+            sessionStorage.setItem("appilcantID", null);
             dispatch(recruiterLogin(res.data.recruiterId));
-            navigate(`/hiring/${sessionStorage.getItem("recruiterID")}`);
+            navigate(`/hiring/${res.data.recruiterId}`);
         })
       })
       .catch((error) => {

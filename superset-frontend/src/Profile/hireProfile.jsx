@@ -31,7 +31,6 @@ const HireProfile = () => {
             `https://better-naukri-com.onrender.com/jobs/recruiter/${id}`
         ).then((res)=>{
             setApplications(res.data.jobs);
-            console.log(res.data.jobs);
         })
     }, [])
 
@@ -39,11 +38,11 @@ const HireProfile = () => {
         navigate("/create-role");
     }
 
-    useLayoutEffect(()=>{
-        if(sessionStorage.getItem("recruiterID") !== id){
-            navigate('/');
-        }
-    }, [])
+    // useEffect(()=>{
+    //     if(sessionStorage.getItem("recruiterID") != null){
+    //         navigate(`/hiring/${id}`);
+    //     }
+    // }, [])
 
     return ( 
         <div className={styles.profileWrapper}>

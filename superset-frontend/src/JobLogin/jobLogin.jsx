@@ -49,6 +49,7 @@ const JobLogin = ({setApplicantState}) => {
         ).then((res)=>{
             dispatch(applicantLogin(res.data.applicantId));
             sessionStorage.setItem("applicantID", res.data.applicantId);
+            sessionStorage.setItem("recruiterID", null);
         })
         }).then((res)=>{}).catch((error) => { 
         const credential = GoogleAuthProvider.credentialFromError(error);
